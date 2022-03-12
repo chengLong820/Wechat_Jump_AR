@@ -94,7 +94,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.sceneView.addSubview(scoreLabel)
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
         scoreLabel.font = UIFont.init(name: "ArialRoundedMTBold", size: 45)
-        scoreLabel.textColor = UIColor.orange
+        scoreLabel.textColor = UIColor.white
         scoreLabel.textAlignment = .center
         scoreLabel.topAnchor.constraint(equalTo: sceneView.topAnchor, constant: 50).isActive = true
         scoreLabel.centerXAnchor.constraint(equalTo: sceneView.centerXAnchor).isActive = true
@@ -232,35 +232,23 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                     }
                     self.addBox(at: self.boxNodeArr.last!.position)
                 } else {
-//                    DispatchQueue.main.sync {
-//                        var rolateAction: SCNAction
-//                        if self.randomDirection == .right {
-//                            rolateAction = SCNAction.rotateBy(x: 0, y: 0, z: .pi/2, duration: 2)
-//                        } else {
-//                            rolateAction = SCNAction.rotateBy(x: .pi/2, y: 0, z: 0, duration: 2)
-//                        }
-//                        self.chessNode.runAction(rolateAction)
-//                    }
                     DispatchQueue.main.async {
+                        self.scoreLabel.isHidden = true
                         let endingVC = EndingViewController()
                         endingVC.isModalInPresentation = true
                         endingVC.nowScore = self.nowScore
-                        self.present(endingVC, animated: true, completion: {
-                            self.restart()
-                        })
+                        self.present(endingVC, animated: true, completion: nil)
+                        NotificationCenter.default.addObserver(self, selector: #selector(self.restartBtnIsClicked), name: Notification.Name("clickButtonNotification"), object: nil)
                     }
-                    
-                    
                 }
             })
         }
-        
-                
     }
     
-    
-    
-    
+    @objc func restartBtnIsClicked() {
+        self.scoreLabel.isHidden = false
+        self.restart()
+    }
     
     
     

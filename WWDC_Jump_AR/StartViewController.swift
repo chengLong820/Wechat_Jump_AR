@@ -8,16 +8,16 @@
 import UIKit
 
 class StartViewController: UIViewController {
-    private let welcomeLabel = UILabel()
     private let introducationText = UITextView(frame: .zero)
     private let hintText = UILabel()
+    private let imageView = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         self.navigationController?.navigationBar.isTranslucent = true
         
-        setupWelcomeLabel()
+        setupWelcomeImage()
         setupIntroducationText()
         setupHintText()
     }
@@ -26,22 +26,20 @@ class StartViewController: UIViewController {
         super.viewWillAppear(animated)
     }
     
-    private func setupWelcomeLabel() {
-        self.view.addSubview(welcomeLabel)
-        welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
-        welcomeLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 50).isActive = true
-        welcomeLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        welcomeLabel.text = "Welcome!"
-        welcomeLabel.textColor = UIColor.orange
-        welcomeLabel.font = UIFont.init(name: "ArialRoundedMTBold", size: 50)
-        welcomeLabel.textAlignment = .center
+    private func setupWelcomeImage() {
+        self.view.addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
+        imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        imageView.image = UIImage.init(named: "welcome.png")
         
     }
-    
+  
     private func setupIntroducationText() {
         self.view.addSubview(introducationText)
         introducationText.translatesAutoresizingMaskIntoConstraints = false
-        introducationText.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 150).isActive = true
+        introducationText.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 190).isActive = true
         introducationText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25).isActive = true
         introducationText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
         introducationText.textAlignment = .left
@@ -63,7 +61,7 @@ class StartViewController: UIViewController {
         hintText.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -150).isActive = true
         hintText.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         hintText.textAlignment = .center
-        hintText.text = "Tips: Please try to play the game on a flat surface."
+        hintText.text = "Tips: Try to aim the camera at a flat surface！"
         hintText.textColor = UIColor.orange
         hintText.font = UIFont.systemFont(ofSize: 15)
     }

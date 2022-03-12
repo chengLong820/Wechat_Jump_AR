@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8420E2C127D4E28D0018C24A /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8420E2C027D4E28D0018C24A /* StartViewController.swift */; };
 		84233C5427C7CFC100F748E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84233C5327C7CFC100F748E8 /* AppDelegate.swift */; };
-		84233C5627C7CFC100F748E8 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 84233C5527C7CFC100F748E8 /* art.scnassets */; };
 		84233C5827C7CFC100F748E8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84233C5727C7CFC100F748E8 /* ViewController.swift */; };
 		84233C5B27C7CFC100F748E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84233C5927C7CFC100F748E8 /* Main.storyboard */; };
 		84233C5D27C7CFC300F748E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84233C5C27C7CFC300F748E8 /* Assets.xcassets */; };
@@ -18,9 +17,9 @@
 		84233C7427C7CFC300F748E8 /* WWDC_Jump_ARUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84233C7327C7CFC300F748E8 /* WWDC_Jump_ARUITests.swift */; };
 		84233C7627C7CFC300F748E8 /* WWDC_Jump_ARUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84233C7527C7CFC300F748E8 /* WWDC_Jump_ARUITestsLaunchTests.swift */; };
 		84233C8327C7D02300F748E8 /* RandomDirectionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84233C8227C7D02300F748E8 /* RandomDirectionEnum.swift */; };
+		8466F5C227DCEBEE00ECEDB8 /* welcome.png in Resources */ = {isa = PBXBuildFile; fileRef = 8466F5C127DCEBEE00ECEDB8 /* welcome.png */; };
 		8478AC9F27CB7A7200C489C0 /* ChessNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8478AC9E27CB7A7200C489C0 /* ChessNode.swift */; };
 		8480CFA927D3BA80008E272D /* EndingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480CFA827D3BA80008E272D /* EndingViewController.swift */; };
-		84B874F427CE50980002D1F2 /* toDoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B874F327CE50980002D1F2 /* toDoList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +43,6 @@
 		8420E2C027D4E28D0018C24A /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		84233C5027C7CFC100F748E8 /* WWDC_Jump_AR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WWDC_Jump_AR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84233C5327C7CFC100F748E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		84233C5527C7CFC100F748E8 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		84233C5727C7CFC100F748E8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		84233C5A27C7CFC100F748E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		84233C5C27C7CFC300F748E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -55,9 +53,9 @@
 		84233C7327C7CFC300F748E8 /* WWDC_Jump_ARUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWDC_Jump_ARUITests.swift; sourceTree = "<group>"; };
 		84233C7527C7CFC300F748E8 /* WWDC_Jump_ARUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWDC_Jump_ARUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		84233C8227C7D02300F748E8 /* RandomDirectionEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDirectionEnum.swift; sourceTree = "<group>"; };
+		8466F5C127DCEBEE00ECEDB8 /* welcome.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = welcome.png; path = ../../../welcome.png; sourceTree = "<group>"; };
 		8478AC9E27CB7A7200C489C0 /* ChessNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessNode.swift; sourceTree = "<group>"; };
 		8480CFA827D3BA80008E272D /* EndingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndingViewController.swift; sourceTree = "<group>"; };
-		84B874F327CE50980002D1F2 /* toDoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toDoList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,16 +107,15 @@
 			isa = PBXGroup;
 			children = (
 				84233C5327C7CFC100F748E8 /* AppDelegate.swift */,
-				84233C5527C7CFC100F748E8 /* art.scnassets */,
 				84233C5727C7CFC100F748E8 /* ViewController.swift */,
-				84233C5927C7CFC100F748E8 /* Main.storyboard */,
-				84233C5C27C7CFC300F748E8 /* Assets.xcassets */,
-				84233C5E27C7CFC300F748E8 /* LaunchScreen.storyboard */,
-				84233C8227C7D02300F748E8 /* RandomDirectionEnum.swift */,
 				8478AC9E27CB7A7200C489C0 /* ChessNode.swift */,
-				84B874F327CE50980002D1F2 /* toDoList.swift */,
 				8480CFA827D3BA80008E272D /* EndingViewController.swift */,
 				8420E2C027D4E28D0018C24A /* StartViewController.swift */,
+				84233C8227C7D02300F748E8 /* RandomDirectionEnum.swift */,
+				84233C5927C7CFC100F748E8 /* Main.storyboard */,
+				8466F5C127DCEBEE00ECEDB8 /* welcome.png */,
+				84233C5C27C7CFC300F748E8 /* Assets.xcassets */,
+				84233C5E27C7CFC300F748E8 /* LaunchScreen.storyboard */,
 			);
 			path = WWDC_Jump_AR;
 			sourceTree = "<group>";
@@ -244,9 +241,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84233C5627C7CFC100F748E8 /* art.scnassets in Resources */,
 				84233C6027C7CFC300F748E8 /* LaunchScreen.storyboard in Resources */,
 				84233C5D27C7CFC300F748E8 /* Assets.xcassets in Resources */,
+				8466F5C227DCEBEE00ECEDB8 /* welcome.png in Resources */,
 				84233C5B27C7CFC100F748E8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,7 +272,6 @@
 				84233C5827C7CFC100F748E8 /* ViewController.swift in Sources */,
 				8420E2C127D4E28D0018C24A /* StartViewController.swift in Sources */,
 				8480CFA927D3BA80008E272D /* EndingViewController.swift in Sources */,
-				84B874F427CE50980002D1F2 /* toDoList.swift in Sources */,
 				84233C5427C7CFC100F748E8 /* AppDelegate.swift in Sources */,
 				8478AC9F27CB7A7200C489C0 /* ChessNode.swift in Sources */,
 				84233C8327C7D02300F748E8 /* RandomDirectionEnum.swift in Sources */,
