@@ -10,10 +10,13 @@ import SceneKit
 import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
+    
 
-    @IBOutlet weak var sceneView: ARSCNView!
+    private var sceneView = ARSCNView()
+//    @IBOutlet weak var sceneView: ARSCNView!
     private var currentAnchor: ARAnchor? // 当前锚点
     private var scoreLabel = UILabel()
+    private var pressProgressBar = UIProgressView() // 按压力度条
     
     private let boxHeight: CGFloat = 0.2 // 箱子高度
     private var boxNodeArr: [SCNNode] = [] // 当前箱子数组
@@ -34,6 +37,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     private var highestScore = 0
     public var nowScore = 0
     
+    private var timer = Timer()
+    
      
     
     override func viewDidLoad() {
@@ -44,11 +49,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = false
         
+        setupARSCNView()
         setupScoreLabel()
+        setupPressProgressView()
 
         DispatchQueue.main.async {
-            self.pushStartViewController()
+//            self.pushStartViewController()
+            let startVC = StartViewController()
+            self.present(startVC, animated: true, completion: self.restart)
         }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,33 +83,53 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.session.pause()
     }
     
-    private func pushStartViewController() {
-        let startVC = StartViewController()
-        let topVC = getTopMostViewController()
-        topVC?.present(startVC, animated: true, completion: {
-            self.restart()
-        })
-    }
+//    private func pushStartViewController() {
+//        let startVC = StartViewController()
+//        let topVC = getTopMostViewController()
+//        topVC?.present(startVC, animated: true, completion: {
+//            self.restart()
+//        })
+//    }
+//
+//    func getTopMostViewController() -> UIViewController? {
+//        var topMostViewController = UIApplication.shared.keyWindow?.rootViewController
+//        while let presentedViewController = topMostViewController?.presentedViewController {
+//            topMostViewController = presentedViewController
+//        }
+//        return topMostViewController
+//    }
     
-    func getTopMostViewController() -> UIViewController? {
-        var topMostViewController = UIApplication.shared.keyWindow?.rootViewController
-        while let presentedViewController = topMostViewController?.presentedViewController {
-            topMostViewController = presentedViewController
-        }
-        return topMostViewController
+    private func setupARSCNView() {
+        self.view.addSubview(sceneView)
+        sceneView.translatesAutoresizingMaskIntoConstraints = false
+        sceneView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        sceneView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        sceneView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        sceneView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
     private func setupScoreLabel() {
         highestScore = UserDefaults.standard.integer(forKey: highestScoreKeyString)
         self.sceneView.addSubview(scoreLabel)
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+        scoreLabel.topAnchor.constraint(equalTo: sceneView.topAnchor, constant: 50).isActive = true
+        scoreLabel.centerXAnchor.constraint(equalTo: sceneView.centerXAnchor).isActive = true
         scoreLabel.font = UIFont.init(name: "ArialRoundedMTBold", size: 45)
         scoreLabel.textColor = UIColor.white
         scoreLabel.textAlignment = .center
-        scoreLabel.topAnchor.constraint(equalTo: sceneView.topAnchor, constant: 50).isActive = true
-        scoreLabel.centerXAnchor.constraint(equalTo: sceneView.centerXAnchor).isActive = true
         scoreLabel.numberOfLines = 2
         scoreLabel.text = "Highest:\(highestScore)\nNow:\(nowScore)"
+    }
+    
+    private func setupPressProgressView() {
+        self.view.addSubview(pressProgressBar)
+        pressProgressBar.translatesAutoresizingMaskIntoConstraints = false
+        pressProgressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 80).isActive = true
+        pressProgressBar.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor, constant: 20).isActive = true
+        pressProgressBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -80).isActive = true
+        pressProgressBar.progressTintColor = UIColor.green
+        pressProgressBar.trackTintColor = UIColor.gray
+        pressProgressBar.progress = 0
     }
     
     public func restart() {
@@ -115,6 +145,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         let action = SCNAction.fadeIn(duration: 0.5)
         action.timingMode = SCNActionTimingMode.easeIn
         chessNode.runAction(action)
+        pressProgressBar.progress = 0
 
     }
     
@@ -175,6 +206,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         
     }
     
+    @objc func progressChanged() {
+        if self.pressProgressBar.progress > 1 {
+            pressProgressBar.progress = 1
+        }
+        pressProgressBar.setProgress(pressProgressBar.progress+0.05, animated: true)
+    }
+    
     // 检测点击事件开始
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if currentAnchor == nil { return  }
@@ -190,6 +228,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             if !isTouching {
                 isTouching = true
             }
+            self.timer = Timer.scheduledTimer(timeInterval: 0.08, target: self, selector: #selector(progressChanged), userInfo: nil, repeats: true)
             touchingTime.start = (event?.timestamp)!
         }
     }
@@ -201,10 +240,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         }
         if isTouching {
             isTouching = false
+            
+            self.timer.invalidate()
+            pressProgressBar.setProgress(0, animated: true)
+            
+            
             touchingTime.end = (event?.timestamp)!
             
             // 棋子飞行距离
-            let distanceOfChess = (touchingTime.end - touchingTime.start) * 0.4
+            let distanceOfChess = (touchingTime.end - touchingTime.start) * 0.2
             
             // 飞行动画
             var actions = [SCNAction()]
@@ -234,6 +278,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 } else {
                     DispatchQueue.main.async {
                         self.scoreLabel.isHidden = true
+                        self.pressProgressBar.isHidden = true
                         let endingVC = EndingViewController()
                         endingVC.isModalInPresentation = true
                         endingVC.nowScore = self.nowScore
@@ -247,6 +292,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @objc func restartBtnIsClicked() {
         self.scoreLabel.isHidden = false
+        self.pressProgressBar.isHidden = false
         self.restart()
     }
     
