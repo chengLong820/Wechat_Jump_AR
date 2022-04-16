@@ -5,7 +5,7 @@
 //  Created by admin on 2022/2/27.
 //
 
-import UIKit
+//import UIKit
 import SceneKit
 
 class ChessNode: SCNNode {
@@ -21,12 +21,6 @@ class ChessNode: SCNNode {
         material.diffuse.contents = UIColor(red: CGFloat.random(in: 0...1), green: CGFloat.random(in: 0...1), blue: CGFloat.random(in: 0...1), alpha: 0.95)
         return material
     }()
-    
-//    lazy var coneNode: SCNNode = {
-//        let capsule = SCNCapsule(capRadius: 0.025, height: chessHeight)
-//        capsule.materials = [chessMaterial]
-//        return SCNNode(geometry: capsule)
-//    }()
     
     lazy var coneNode: SCNNode = {
         let cone = SCNCone(topRadius: 0.02, bottomRadius: 0.03, height: chessHeight)

@@ -83,22 +83,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.session.pause()
     }
     
-//    private func pushStartViewController() {
-//        let startVC = StartViewController()
-//        let topVC = getTopMostViewController()
-//        topVC?.present(startVC, animated: true, completion: {
-//            self.restart()
-//        })
-//    }
-//
-//    func getTopMostViewController() -> UIViewController? {
-//        var topMostViewController = UIApplication.shared.keyWindow?.rootViewController
-//        while let presentedViewController = topMostViewController?.presentedViewController {
-//            topMostViewController = presentedViewController
-//        }
-//        return topMostViewController
-//    }
-    
     private func setupARSCNView() {
         self.view.addSubview(sceneView)
         sceneView.translatesAutoresizingMaskIntoConstraints = false
