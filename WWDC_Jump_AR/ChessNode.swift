@@ -48,7 +48,6 @@ class ChessNode: SCNNode {
     }
     
     func isOnBox(boxNode: SCNNode) -> Bool {
-        print(boxNode.geometry)
         if boxNode.geometry is SCNBox { // 长方体箱子
             let box = boxNode.geometry as! SCNBox
             let width = Float(box.width)
@@ -57,13 +56,17 @@ class ChessNode: SCNNode {
                 return true
             }
         } else if boxNode.geometry is SCNCylinder { // 圆柱形箱子
-            if abs(self.position.x - boxNode.position.x) <= 0.1  &&
-                abs(self.position.z - boxNode.position.z) <= 0.1 {
+            let box = boxNode.geometry as! SCNCylinder
+            let radius = box.radius
+            if abs(self.position.x - boxNode.position.x) <= Float(radius)  &&
+                abs(self.position.z - boxNode.position.z) <= Float(radius) {
                 return true
             }
         } else if boxNode.geometry is SCNCone { // 圆台形箱子
-            if abs(self.position.x - boxNode.position.x) <= 0.08  &&
-                abs(self.position.z - boxNode.position.z) <= 0.08 {
+            let box = boxNode.geometry as! SCNCone
+            let topRadius = box.topRadius
+            if abs(self.position.x - boxNode.position.x) <= Float(topRadius)  &&
+                abs(self.position.z - boxNode.position.z) <= Float(topRadius) {
                 return true
             }
         }
@@ -85,6 +88,14 @@ class ChessNode: SCNNode {
     public func rise() {
         sphereNode.position = SCNVector3(0, Float(chessHeight)*0.8, 0)
         (coneNode.geometry as! SCNCone).height = chessHeight
+    }
+    
+    public func chessFallAnimation() {
+        self.runAction(SCNAction.fadeOut(duration: 1))
+    }
+    
+    public func chessFadeIn() {
+        self.runAction(SCNAction.fadeIn(duration: 0.2))
     }
     
 }

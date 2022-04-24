@@ -8,37 +8,45 @@
 import UIKit
 import SceneKit
 import ARKit
+import AVFoundation
 
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
 
     private var sceneView = ARSCNView()
-//    @IBOutlet weak var sceneView: ARSCNView!
     private var currentAnchor: ARAnchor? // 当前锚点
     private var scoreLabel = UILabel()
     private var pressProgressBar = UIProgressView() // 按压力度条
     
     private let boxHeight: CGFloat = 0.2 // 箱子高度
+    private var boxWidth: CGFloat = 0.2 // 可变箱子宽度
+    private let minBoxWidth: CGFloat = 0.13 // 箱子最小宽度
     private var boxNodeArr: [SCNNode] = [] // 当前箱子数组
-    private let boxRadius = 0.1
+//    private let boxRadius = 0.1
+    
     
     lazy var chessNode: ChessNode = {
        return ChessNode()
     }()
     
     // 触摸事件
+    private var timer = Timer()
     private var isTouching = false
     private var randomDirection: RandomDirection = .up // 随机方向
     private var touchingTime: (start: TimeInterval, end: TimeInterval) = (0, 0)
     private let flyingTimeOfChess: TimeInterval = 0.5
     private let flyingheightOfChess = 0.2
+    
     // 分数统计
     private let highestScoreKeyString = "HighestScoreKey"
     private var highestScore = 0
     public var nowScore = 0
     
-    private var timer = Timer()
-    
+    // 播放声音
+    private var pressSoundPlayer: AVAudioPlayer!
+    private var failSoundPlayer: AVAudioPlayer!
+    private var fallSoundPlayer: AVAudioPlayer!
+
      
     
     override func viewDidLoad() {
@@ -52,7 +60,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         setupARSCNView()
         setupScoreLabel()
         setupPressProgressView()
-
+        
+        setPlayer()
+        
         DispatchQueue.main.async {
 //            self.pushStartViewController()
             let startVC = StartViewController()
@@ -81,6 +91,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         
         // Pause the view's session
         sceneView.session.pause()
+    }
+    
+    private func setPlayer() {
+        let pressSoundPath = Bundle.main.path(forResource: "presssound", ofType: "mp3")
+        let failSoundPath = Bundle.main.path(forResource: "failsound", ofType: "mp3")
+        let fallSoundPath = Bundle.main.path(forResource: "fallsound", ofType: "mp3")
+        do {
+            pressSoundPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: pressSoundPath!))
+            failSoundPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: failSoundPath!))
+            fallSoundPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: fallSoundPath!))
+        } catch {
+            print("player error!")
+        }
     }
     
     private func setupARSCNView() {
@@ -117,6 +140,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     public func restart() {
+        boxWidth = 0.2
         isTouching = false
         touchingTime = (0, 0)
         boxNodeArr.forEach { boxNode in
@@ -141,15 +165,20 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     // 生成箱子
     private func addBox(at realPosition: SCNVector3) {
+        // 根据箱子数量减少箱子的宽度
+        if boxWidth > minBoxWidth {
+            boxWidth = boxWidth - CGFloat(boxNodeArr.count/2) * 0.005
+        }
+        
         // 生成箱子
         let randomNumber = Int.random(in: 1...100)
         let box: SCNGeometry
         if randomNumber%3 == 0 { // 长方体箱子
-            box = SCNBox(width: boxHeight, height: boxHeight / 2, length: boxHeight, chamferRadius: 0.0)
+            box = SCNBox(width: boxWidth, height: boxHeight / 2, length: boxWidth, chamferRadius: 0.0)
         } else if randomNumber%3 == 1{ // 圆柱形箱子
-            box = SCNCylinder(radius: boxRadius, height: boxHeight / 2)
+            box = SCNCylinder(radius: boxWidth/2, height: boxHeight / 2)
         } else { // 圆台形箱子
-            box = SCNCone(topRadius: 0.08, bottomRadius: boxHeight/2, height: boxHeight/2)
+            box = SCNCone(topRadius: boxWidth/2*0.8, bottomRadius: boxWidth/2, height: boxHeight/2)
         }
 
         let node = SCNNode(geometry: box)
@@ -201,6 +230,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if currentAnchor == nil { return  }
         
+        pressSoundPlayer.currentTime = 0
+        pressSoundPlayer.play()
+        
         if boxNodeArr.isEmpty { // 初始化游戏
             let hitLocation = touches.first?.location(in: sceneView)
             if let position = getHitPosition(hitLocation: hitLocation!) {
@@ -222,6 +254,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         if currentAnchor == nil && boxNodeArr.isEmpty {
             return
         }
+        if pressSoundPlayer.isPlaying {
+            pressSoundPlayer.stop()
+        }
+        
         if isTouching {
             isTouching = false
             
@@ -232,14 +268,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             touchingTime.end = (event?.timestamp)!
             
             // 棋子飞行距离
-            let distanceOfChess = (touchingTime.end - touchingTime.start) * 0.2
+            let distanceOfChess = (touchingTime.end - touchingTime.start) * 0.25
             
             // 飞行动画
             var actions = [SCNAction()]
             if randomDirection == .right {
                 let action1 = SCNAction.moveBy(x: distanceOfChess, y: flyingheightOfChess, z: 0, duration: flyingTimeOfChess / 2)
                 let action2 = SCNAction.moveBy(x: distanceOfChess, y: -flyingheightOfChess, z: 0, duration: flyingTimeOfChess / 2)
-                actions = [SCNAction.rotateBy(x: 0, y: 0, z: .pi * 2, duration: flyingTimeOfChess),
+                actions = [SCNAction.rotateBy(x: 0, y: 0, z: -.pi * 2, duration: flyingTimeOfChess),
                            SCNAction.sequence([action1, action2])]
             } else {
                 let action1 = SCNAction.moveBy(x: 0, y: flyingheightOfChess, z: distanceOfChess, duration: flyingTimeOfChess / 2)
@@ -259,8 +295,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                         self.scoreLabel.text = "Highest:\(self.highestScore)\nNow:\(self.nowScore)"
                     }
                     self.addBox(at: self.boxNodeArr.last!.position)
+                    
+                    self.fallSoundPlayer.play()
+                    
                 } else {
+                    
+                    self.failSoundPlayer.play()
+                    
                     DispatchQueue.main.async {
+                        self.chessNode.chessFallAnimation()
                         self.scoreLabel.isHidden = true
                         self.pressProgressBar.isHidden = true
                         let endingVC = EndingViewController()
@@ -271,6 +314,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                     }
                 }
             })
+            fallSoundPlayer.stop()
         }
     }
     
@@ -278,6 +322,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.scoreLabel.isHidden = false
         self.pressProgressBar.isHidden = false
         self.restart()
+        self.chessNode.chessFadeIn()
     }
     
     

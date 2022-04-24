@@ -18,6 +18,9 @@
 		8466F5C227DCEBEE00ECEDB8 /* welcome.png in Resources */ = {isa = PBXBuildFile; fileRef = 8466F5C127DCEBEE00ECEDB8 /* welcome.png */; };
 		8478AC9F27CB7A7200C489C0 /* ChessNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8478AC9E27CB7A7200C489C0 /* ChessNode.swift */; };
 		8480CFA927D3BA80008E272D /* EndingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480CFA827D3BA80008E272D /* EndingViewController.swift */; };
+		84B38A0D2813915500F0E4F1 /* failsound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84B38A0C2813915500F0E4F1 /* failsound.mp3 */; };
+		84B38A0F2813915B00F0E4F1 /* fallsound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84B38A0E2813915B00F0E4F1 /* fallsound.mp3 */; };
+		84B38A132814150D00F0E4F1 /* presssound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84B38A122814150D00F0E4F1 /* presssound.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +55,9 @@
 		8466F5C127DCEBEE00ECEDB8 /* welcome.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = welcome.png; path = ../../../welcome.png; sourceTree = "<group>"; };
 		8478AC9E27CB7A7200C489C0 /* ChessNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessNode.swift; sourceTree = "<group>"; };
 		8480CFA827D3BA80008E272D /* EndingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndingViewController.swift; sourceTree = "<group>"; };
+		84B38A0C2813915500F0E4F1 /* failsound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = failsound.mp3; path = ../../../../Downloads/failsound.mp3; sourceTree = "<group>"; };
+		84B38A0E2813915B00F0E4F1 /* fallsound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = fallsound.mp3; path = ../../../../Downloads/fallsound.mp3; sourceTree = "<group>"; };
+		84B38A122814150D00F0E4F1 /* presssound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = presssound.mp3; path = ../../../../Downloads/presssound.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +114,9 @@
 				8480CFA827D3BA80008E272D /* EndingViewController.swift */,
 				8420E2C027D4E28D0018C24A /* StartViewController.swift */,
 				84233C8227C7D02300F748E8 /* RandomDirectionEnum.swift */,
+				84B38A0C2813915500F0E4F1 /* failsound.mp3 */,
+				84B38A0E2813915B00F0E4F1 /* fallsound.mp3 */,
+				84B38A122814150D00F0E4F1 /* presssound.mp3 */,
 				8466F5C127DCEBEE00ECEDB8 /* welcome.png */,
 				84233C5C27C7CFC300F748E8 /* Assets.xcassets */,
 			);
@@ -235,8 +244,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84B38A0D2813915500F0E4F1 /* failsound.mp3 in Resources */,
+				84B38A0F2813915B00F0E4F1 /* fallsound.mp3 in Resources */,
 				84233C5D27C7CFC300F748E8 /* Assets.xcassets in Resources */,
 				8466F5C227DCEBEE00ECEDB8 /* welcome.png in Resources */,
+				84B38A132814150D00F0E4F1 /* presssound.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

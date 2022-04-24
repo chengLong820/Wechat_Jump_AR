@@ -32,6 +32,7 @@ class StartViewController: UIViewController {
         imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
         imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        imageView.contentMode = .center
         imageView.image = UIImage.init(named: "welcome.png")
         
     }
@@ -42,12 +43,13 @@ class StartViewController: UIViewController {
         introducationText.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 190).isActive = true
         introducationText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25).isActive = true
         introducationText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
+        introducationText.backgroundColor = .white
         introducationText.textAlignment = .left
         introducationText.text = """
-                                \tWelcome to Jump!\n
-                                \tYou need to tap the screen to make the pieces fall into the next box, the score will increase by one for each successful jump, and the game ends if the jump fails.\n
-                                \tWait a few seconds for the first time you enter the game.\n
-                                \tSo please scroll down this page to start the game now!
+                                \tWelcome to ARJump!\n
+                                \tYou need to tap the screen to make the pieces fall into the next box, the score will increase by one for each successful jump. The box will gradually get smaller，and the game ends if the jump fails.\n
+                                \tClick anywhere to add a box. Wait a few seconds for the first time you enter the game.\n
+                                \tSo please turn on sound and scroll down this page to start the game now!
                             """
         introducationText.textColor = UIColor.black
         introducationText.font = UIFont.init(name: "ArialRoundedMTBold", size: 20)
@@ -58,12 +60,12 @@ class StartViewController: UIViewController {
     private func setupHintText() {
         self.view.addSubview(hintText)
         hintText.translatesAutoresizingMaskIntoConstraints = false
-        hintText.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -150).isActive = true
+        hintText.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -200).isActive = true
         hintText.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         hintText.textAlignment = .center
-        hintText.text = "Tips: Try to aim the camera at a flat surface！"
-        hintText.textColor = UIColor.orange
-        hintText.font = UIFont.systemFont(ofSize: 15)
+        hintText.text = "Make sure the camera is aimed at an open surface"
+        hintText.textColor = UIColor.red
+        hintText.font = UIFont.systemFont(ofSize: 18)
     }
     
 }
