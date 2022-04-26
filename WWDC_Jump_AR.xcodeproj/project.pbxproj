@@ -21,6 +21,7 @@
 		84B38A0D2813915500F0E4F1 /* failsound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84B38A0C2813915500F0E4F1 /* failsound.mp3 */; };
 		84B38A0F2813915B00F0E4F1 /* fallsound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84B38A0E2813915B00F0E4F1 /* fallsound.mp3 */; };
 		84B38A132814150D00F0E4F1 /* presssound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84B38A122814150D00F0E4F1 /* presssound.mp3 */; };
+		84EF8906281655B000745E22 /* backgroundsound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84EF8905281655B000745E22 /* backgroundsound.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		84B38A0C2813915500F0E4F1 /* failsound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = failsound.mp3; path = ../../../../Downloads/failsound.mp3; sourceTree = "<group>"; };
 		84B38A0E2813915B00F0E4F1 /* fallsound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = fallsound.mp3; path = ../../../../Downloads/fallsound.mp3; sourceTree = "<group>"; };
 		84B38A122814150D00F0E4F1 /* presssound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = presssound.mp3; path = ../../../../Downloads/presssound.mp3; sourceTree = "<group>"; };
+		84EF8905281655B000745E22 /* backgroundsound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = backgroundsound.mp3; path = ../../../../Downloads/backgroundsound.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 				84B38A0C2813915500F0E4F1 /* failsound.mp3 */,
 				84B38A0E2813915B00F0E4F1 /* fallsound.mp3 */,
 				84B38A122814150D00F0E4F1 /* presssound.mp3 */,
+				84EF8905281655B000745E22 /* backgroundsound.mp3 */,
 				8466F5C127DCEBEE00ECEDB8 /* welcome.png */,
 				84233C5C27C7CFC300F748E8 /* Assets.xcassets */,
 			);
@@ -246,6 +249,7 @@
 			files = (
 				84B38A0D2813915500F0E4F1 /* failsound.mp3 in Resources */,
 				84B38A0F2813915B00F0E4F1 /* fallsound.mp3 in Resources */,
+				84EF8906281655B000745E22 /* backgroundsound.mp3 in Resources */,
 				84233C5D27C7CFC300F748E8 /* Assets.xcassets in Resources */,
 				8466F5C227DCEBEE00ECEDB8 /* welcome.png in Resources */,
 				84B38A132814150D00F0E4F1 /* presssound.mp3 in Resources */,

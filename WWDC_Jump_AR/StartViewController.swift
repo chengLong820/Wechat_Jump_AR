@@ -54,6 +54,7 @@ class StartViewController: UIViewController {
         introducationText.textColor = UIColor.black
         introducationText.font = UIFont.init(name: "ArialRoundedMTBold", size: 20)
         introducationText.isScrollEnabled = false
+        introducationText.isEditable = false
         
     }
     

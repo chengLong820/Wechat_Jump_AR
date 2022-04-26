@@ -46,8 +46,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     private var pressSoundPlayer: AVAudioPlayer!
     private var failSoundPlayer: AVAudioPlayer!
     private var fallSoundPlayer: AVAudioPlayer!
+    private var backgroundPLayer: AVAudioPlayer!
+    
+    // 操作提示
+    private let hintLabel = UILabel()
 
-     
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +63,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         setupARSCNView()
         setupScoreLabel()
         setupPressProgressView()
+        setupHintLabel()
         
         setPlayer()
         
@@ -97,10 +101,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         let pressSoundPath = Bundle.main.path(forResource: "presssound", ofType: "mp3")
         let failSoundPath = Bundle.main.path(forResource: "failsound", ofType: "mp3")
         let fallSoundPath = Bundle.main.path(forResource: "fallsound", ofType: "mp3")
+        let backgroundPath = Bundle.main.path(forResource: "backgroundsound", ofType: "mp3")
         do {
             pressSoundPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: pressSoundPath!))
             failSoundPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: failSoundPath!))
             fallSoundPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: fallSoundPath!))
+            backgroundPLayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: backgroundPath!))
+            backgroundPLayer.numberOfLoops = -1
+            backgroundPLayer.play()
         } catch {
             print("player error!")
         }
@@ -139,6 +147,20 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         pressProgressBar.progress = 0
     }
     
+    private func setupHintLabel() {
+        let screenWidth = UIScreen.main.bounds.width
+        self.view.addSubview(hintLabel)
+        hintLabel.translatesAutoresizingMaskIntoConstraints = false
+        hintLabel.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -screenWidth/6).isActive = true
+        hintLabel.centerXAnchor.constraint(equalTo: sceneView.centerXAnchor).isActive = true
+        hintLabel.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        hintLabel.isHidden = false
+        hintLabel.font = UIFont.init(name: "ArialRoundedMTBold", size: 20)
+        hintLabel.textColor = UIColor.white
+        hintLabel.textAlignment = .center
+        hintLabel.text = "Press anywhere to start!"
+    }
+    
     public func restart() {
         boxWidth = 0.2
         isTouching = false
@@ -154,6 +176,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         action.timingMode = SCNActionTimingMode.easeIn
         chessNode.runAction(action)
         pressProgressBar.progress = 0
+        hintLabel.isHidden = false
+        hintLabel.text = "Press anywhere to start!"
 
     }
     
@@ -240,12 +264,18 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 addChess()
                 addBox(at: boxNodeArr.last!.position)
             }
+            
+            hintLabel.text = "Press anywhere to make the piece jump!"
+            
         } else {
             if !isTouching {
                 isTouching = true
             }
             self.timer = Timer.scheduledTimer(timeInterval: 0.08, target: self, selector: #selector(progressChanged), userInfo: nil, repeats: true)
             touchingTime.start = (event?.timestamp)!
+            
+            hintLabel.isHidden = true
+            
         }
     }
     
@@ -324,6 +354,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.restart()
         self.chessNode.chessFadeIn()
     }
+    
+    
+    
     
     
     
